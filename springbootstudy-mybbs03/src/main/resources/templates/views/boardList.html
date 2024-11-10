@@ -50,7 +50,7 @@
                                 <th:block th:if="${not #lists.isEmpty(bList)}">
                                     <tr th:each="board : ${bList}">
                                         <td>[[ ${board.no} ]]</td>
-                                        <td>[[ ${board.title} ]]</td>
+                                        <td><a th:href="@{boardDetail(no=${board.no})}">[[ ${board.title} ]]</a></td>
                                         <td th:text="${board.writer}"></td>
                                         <td>[[ ${#dates.format(board.regDate, 'yyyy-MM-dd')} ]]</td>
                                         <td th:text="${board.readCount}"></td>

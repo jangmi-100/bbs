@@ -18,6 +18,9 @@ SELECT
 FROM springbbs
 ORDER BY no DESC
 </select>
+<select id="getBoard" resultType="Board">
+SELECT * FROM springbbs WHERE no=#{no}
+</select>
 </mapper>	
 
 
