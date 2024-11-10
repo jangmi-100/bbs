@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BoardService</title>
+    <link th:href="@{bootstrap/bootstrap.min.css}" rel="stylesheet" >
+</head>
+<body>
+    <div class="container">
+        <div th:replace="~{fragments/header::header}"></div>
+        <div layout:fragment="content"></div>
+        <div th:replace="~{fragments/footer::footer}"></div>
+    </div>
+    <script th:src="@{bootstrap/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
