@@ -21,6 +21,25 @@ ORDER BY no DESC
 <select id="getBoard" resultType="Board">
 SELECT * FROM springbbs WHERE no=#{no}
 </select>
+
+<insert id="insertBoard" parameterType="Board" useGeneratedKeys="true" keyProperty="no">
+INSERT INTO springbbs(title,writer,content,reg_date, read_count,pass,file1)
+VALUES(#{title},#{writer},#{content},SYSDATE(),#{readCount},#{pass},#{file1})
+</insert>
+
+<select id="isPassCheck">
+SELECT
+pass
+FROM springbbs
+WHERE no=#{no}
+</select>
+
+<update id="updateBoard" parameterType="Board">
+UPDATE springbbs
+SET title = #{title},content=#{content},
+reg_date=SYSDATE()
+WHERE no=#{no}
+</update>
 </mapper>	
 
 

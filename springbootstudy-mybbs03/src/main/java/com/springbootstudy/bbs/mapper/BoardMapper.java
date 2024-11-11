@@ -12,4 +12,10 @@ public interface BoardMapper {
 public List<Board> boardList();
 
 public Board getBoard(int no);
+
+public void insertBoard(Board board);
+
+public String isPassCheck(int no);
+
+public void updateBoard(Board board);
 }

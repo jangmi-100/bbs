@@ -31,7 +31,7 @@
                 </form>  		
                 <div class="row">
                     <div class="col text-end">
-                        <a href="#" class="btn btn-outline-success">글쓰기</a>
+                        <a th:href="@{addBoard}" class="btn btn-outline-success">글쓰기</a>
                     </div>
                 </div>
                 <div class="row my-3">  			
@@ -50,7 +50,7 @@
                                 <th:block th:if="${not #lists.isEmpty(bList)}">
                                     <tr th:each="board : ${bList}">
                                         <td>[[ ${board.no} ]]</td>
-                                        <td><a th:href="@{boardDetail(no=${board.no})}">[[ ${board.title} ]]</a></td>
+                                        <td><a th:href="@{boardDetail(no=${board.no})}" class="text-decoration-none text-dark">[[ ${board.title} ]]</a></td>
                                         <td th:text="${board.writer}"></td>
                                         <td>[[ ${#dates.format(board.regDate, 'yyyy-MM-dd')} ]]</td>
                                         <td th:text="${board.readCount}"></td>

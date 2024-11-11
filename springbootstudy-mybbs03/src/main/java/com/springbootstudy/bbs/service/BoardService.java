@@ -21,4 +21,31 @@ public List<Board> boardList() {
 log.info("BoardService: boardList()");
 return boardMapper.boardList();
 }
+
+public Board getBoard(int no) {
+	log.info("BoardService:getBorad(int no)");
+	return boardMapper.getBoard(no);
+}
+
+public void addBoard(Board board) {
+	log.info("BoardService:addBoard(Board board)");
+	boardMapper.insertBoard(board);
+}
+
+public boolean isPassCheck(int no, String pass) {
+	log.info("BoardService:isPassCheck(int no, String pass)");
+	boolean result=false;
+	
+	String dbPass=boardMapper.isPassCheck(no);
+	
+	if(dbPass.equals(pass)) {
+		result=true;
+	}
+	return result;
+}
+
+public void updateBoard(Board board) {
+	log.info("BoardService:updateBoard(Board board)");
+	boardMapper.updateBoard(board);
+}
 }
