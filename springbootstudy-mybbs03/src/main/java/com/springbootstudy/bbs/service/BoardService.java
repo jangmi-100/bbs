@@ -48,4 +48,9 @@ public void updateBoard(Board board) {
 	log.info("BoardService:updateBoard(Board board)");
 	boardMapper.updateBoard(board);
 }
+
+public void deleteBoard(int no) {
+	log.info("BoardService:deleteBoard(int no)");
+	boardMapper.deleteBoard(no);
+}
 }

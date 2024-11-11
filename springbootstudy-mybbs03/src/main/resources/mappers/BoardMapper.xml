@@ -40,6 +40,11 @@ SET title = #{title},content=#{content},
 reg_date=SYSDATE()
 WHERE no=#{no}
 </update>
+
+<delete id="deleteBoard">
+DELETE FROM springbbs
+WHERE no=#{no}
+</delete>
 </mapper>	
 
 

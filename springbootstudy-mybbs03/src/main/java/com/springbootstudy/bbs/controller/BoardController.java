@@ -30,6 +30,26 @@ public class BoardController {
 	return "views/boardList";
 	
 }
+	
+	@PostMapping("/delete")
+	public String deleteBoard(HttpServletResponse response, PrintWriter out,
+			@RequestParam("no") int no, @RequestParam("pass") String pass) {
+		
+		boolean isPassCheck=boardService.isPassCheck(no, pass);
+		if(! isPassCheck) {
+			response.setContentType("text/html; charset=utf-8");
+			out.println("<script>");
+			out.println("alert('비밀번호가 맞지 않습니다.');");
+			out.println("history.back();");
+			out.println("</script>");
+			
+			return null;
+		}
+		boardService.deleteBoard(no);
+		return "redirect:boardList";
+	}
+	
+	
 	//글쓰기
 	 @GetMapping("/addBoard")
 	 public String addBoard() {
