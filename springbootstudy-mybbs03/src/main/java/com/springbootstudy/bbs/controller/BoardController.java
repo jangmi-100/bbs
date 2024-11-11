@@ -1,6 +1,7 @@
 package com.springbootstudy.bbs.controller;
 
 import java.io.PrintWriter;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +25,12 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping({"/", "/boardList"})
-	public String boardList(Model model) {
-	model.addAttribute("bList", boardService.boardList());
+	public String boardList(Model model,
+			@RequestParam(value="pageNum",required = false,
+			defaultValue = "1")int pageNum) {
+	Map<String, Object> modelMap=boardService.boardList(pageNum);	
+	model.addAllAttributes(modelMap);
+	
 	
 	return "views/boardList";
 	

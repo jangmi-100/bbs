@@ -3,6 +3,7 @@ package com.springbootstudy.bbs.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.springbootstudy.bbs.domain.Board;
 
@@ -20,4 +21,8 @@ public String isPassCheck(int no);
 public void updateBoard(Board board);
 
 public void deleteBoard(int no);
+
+public List<Board> boardList(@Param("startRow") int startRow, @Param("num") int num);
+
+public int getBoardCount();
 }
