@@ -96,7 +96,10 @@ public class BoardController {
 	
 	@PostMapping("/updateForm")
 	public String updateBoard(Model model,HttpServletResponse response, PrintWriter out, 
-			@RequestParam("no") int no, @RequestParam("pass") String pass,@RequestParam(value="pageNum",defaultValue = "1")int pageNum)
+			@RequestParam("no") int no, @RequestParam("pass") String pass,
+			@RequestParam(value="pageNum",defaultValue = "1")int pageNum
+			,@RequestParam(value="type",defaultValue = "null") String type,
+			@RequestParam(value="keyword",defaultValue = "null")String keyword)
 	{
 		boolean isPassCheck=boardService.isPassCheck(no, pass);
 		if(!isPassCheck) {
@@ -108,14 +111,28 @@ public class BoardController {
 			return null;
 		}
 		Board board=boardService.getBoard(no,false);
+		
+		boolean searchOption=(type.equals("null")||keyword.equals("null"))?false:true;
+		
+		
+		
 		model.addAttribute("board",board);
 		model.addAttribute("pageNum",pageNum);
+		model.addAttribute("searchOption",searchOption);
+		
+		if(searchOption) {
+			model.addAttribute("type",type);
+			model.addAttribute("keyword",keyword);
+		}
+		
 		return "views/updateForm";
 	}
 	
 	@PostMapping("/update")
 	public String updateBoard(Board board, HttpServletResponse response, PrintWriter out,
-			RedirectAttributes reAttrs, @RequestParam(value="pageNum",defaultValue="1")int pageNum) {
+			RedirectAttributes reAttrs, @RequestParam(value="pageNum",defaultValue="1")int pageNum,
+			@RequestParam(value="type",defaultValue = "null")String type,
+			@RequestParam(value="keyword",defaultValue="null")String keyword) {
 		boolean isPassCheck=boardService.isPassCheck(board.getNo(), board.getPass());
 		if(! isPassCheck) {
 			response.setContentType("text/html; charset=utf-8");
@@ -125,7 +142,15 @@ public class BoardController {
 			return null;
 		}
 		boardService.updateBoard(board);
+		
+		boolean searchOption=(type.equals("null")||keyword.equals("null"))?false:true;
+		reAttrs.addAttribute("searchOption", searchOption);
 		reAttrs.addAttribute("pageNum",pageNum);
+		
+		if(searchOption) {
+			reAttrs.addAttribute("keyword", keyword);
+			reAttrs.addAttribute("type", type);
+		}
 		reAttrs.addFlashAttribute("test1","1회성 파라미터");
 		return "redirect:boardList";
 	}

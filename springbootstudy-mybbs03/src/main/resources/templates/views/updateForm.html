@@ -14,6 +14,10 @@
 						class="row g-3 border-primary" method="post">
 							<input type="hidden" name="no" th:value="${board.no}">
 							<input type="hidden" name="pageNum" th:value="${pageNum}">
+							<th:block th:if="${searchOption}">
+							<input type="hidden" name="type" th:value="${type}">
+							<input type="hidden" name="keyword" th:value="${keyword}">
+							</th:block>
 							<div class="col-4 offset-md-2">
 								<label for="writer" class="form-label">글쓴이</label>
 								<input type="text" class="form-control" name="writer" id="writer"
@@ -35,8 +39,14 @@
 							</div>	
 							<div class="col-8 offset-md-2 text-center mt-5">
 							<input type="submit" value="수정하기" class="btn btn-primary"/>
+							<th:block th:unless="${searchOption}">
 								&nbsp;&nbsp;<input type="button" value="목록보기" 
 									th:onclick="@{|location.href='boardList?pageNum=${pageNum}'|}" class="btn btn-primary"/>
+							</th:block>
+							<th:block th:if="${searchOption}">
+								&nbsp;&nbsp;<input type="button" value="목록보기" 
+									th:onclick="@{|location.href='boardList?pageNum=${pageNum}&type=${type}&keyword=${keyword}'|}" class="btn btn-primary"/>
+							</th:block>
 							</div>	
 					</form>
 				</div>
