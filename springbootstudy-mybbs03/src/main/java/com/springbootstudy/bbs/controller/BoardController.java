@@ -40,7 +40,8 @@ public class BoardController {
 	
 	@PostMapping("/delete")
 	public String deleteBoard(HttpServletResponse response, PrintWriter out,
-			@RequestParam("no") int no, @RequestParam("pass") String pass) {
+			@RequestParam("no") int no, @RequestParam("pass") String pass,
+			RedirectAttributes reAttrs, @RequestParam(value="pageNum",defaultValue = "1")int pageNum) {
 		
 		boolean isPassCheck=boardService.isPassCheck(no, pass);
 		if(! isPassCheck) {
@@ -53,6 +54,7 @@ public class BoardController {
 			return null;
 		}
 		boardService.deleteBoard(no);
+		reAttrs.addAttribute("pageNum",pageNum);
 		return "redirect:boardList";
 	}
 	
@@ -116,4 +118,6 @@ public class BoardController {
 		reAttrs.addFlashAttribute("test1","1회성 파라미터");
 		return "redirect:boardList";
 	}
+	
+	
 }
