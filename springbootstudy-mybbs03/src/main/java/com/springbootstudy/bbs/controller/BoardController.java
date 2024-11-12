@@ -42,7 +42,9 @@ public class BoardController {
 	@PostMapping("/delete")
 	public String deleteBoard(HttpServletResponse response, PrintWriter out,
 			@RequestParam("no") int no, @RequestParam("pass") String pass,
-			RedirectAttributes reAttrs, @RequestParam(value="pageNum",defaultValue = "1")int pageNum) {
+			RedirectAttributes reAttrs, @RequestParam(value="pageNum",defaultValue = "1")int pageNum,
+			@RequestParam(value="type",defaultValue = "null")String type,
+			@RequestParam(value="keyword",defaultValue = "null")String keyword) {
 		
 		boolean isPassCheck=boardService.isPassCheck(no, pass);
 		if(! isPassCheck) {
@@ -55,7 +57,16 @@ public class BoardController {
 			return null;
 		}
 		boardService.deleteBoard(no);
+		
+		boolean searchOption=(type.equals("null")||keyword.equals("null"))?false:true;
+		
+		reAttrs.addAttribute("searchOption",searchOption);
 		reAttrs.addAttribute("pageNum",pageNum);
+		
+		if(searchOption) {
+			reAttrs.addAttribute("type",type);
+			reAttrs.addAttribute("keyword",keyword);
+		}
 		return "redirect:boardList";
 	}
 	
