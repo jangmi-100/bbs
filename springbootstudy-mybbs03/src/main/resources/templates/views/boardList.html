@@ -28,8 +28,23 @@
                     <div class="col-auto">
                         <input type="submit" value="검 색" class="btn btn-primary"/>
                     </div>
-                </form>  		
-                <div class="row">
+                </form>  
+                <th:block th:if="${searchOption}">
+	               	<div class="row my-3">
+	               		<div class="col text-center">
+	               		 	"[[${keyword}]]"검색 결과	
+	               		 </div>
+	               	</div>
+	               	<div class="row my-3">
+	               		<div class="col-6">
+	                        <a th:href="@{boardList}" class="btn btn-outline-success">리스트</a>
+	                    </div>
+	                    <div class="col-6 text-end">
+	                        <a th:href="@{addBoard}" class="btn btn-outline-success">글쓰기</a>
+	                    </div>
+                	</div>
+                </th:block>
+                  <div class="row my-3" th:if="${not searchOption}">
                     <div class="col text-end">
                         <a th:href="@{addBoard}" class="btn btn-outline-success">글쓰기</a>
                     </div>
@@ -47,7 +62,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <th:block th:if="${not #lists.isEmpty(bList)}">
+                                <th:block th:if="${searchOption and not #lists.isEmpty(bList)}">
+                                    <tr th:each="board : ${bList}">
+                                        <td>[[ ${board.no} ]]</td>
+                                        <td><a th:href="@{boardDetail(no=${board.no},pageNum=${currentPage},type=${type},keyword=${keyword})}" class="text-decoration-none text-dark">[[ ${board.title} ]]</a></td>
+                                        <td th:text="${board.writer}"></td>
+                                        <td>[[ ${#dates.format(board.regDate, 'yyyy-MM-dd')} ]]</td>
+                                        <td th:text="${board.readCount}"></td>
+                                    </tr>
+                                </th:block>
+                                <th:block th:if="${searchOption and #lists.isEmpty(bList)}">
+                                    <tr>
+                                        <td colspan="5">[[${keyword}]]가 포함된 게시글이 존재하지 않음</td>
+                                    </tr>
+                                </th:block>
+                                <th:block th:if="${not searchOption and not #lists.isEmpty(bList)}">
                                     <tr th:each="board : ${bList}">
                                         <td>[[ ${board.no} ]]</td>
                                         <td><a th:href="@{boardDetail(no=${board.no},pageNum=${currentPage})}" class="text-decoration-none text-dark">[[ ${board.title} ]]</a></td>
@@ -56,7 +85,7 @@
                                         <td th:text="${board.readCount}"></td>
                                     </tr>
                                 </th:block>
-                                <th:block th:unless="${not #lists.isEmpty(bList)}">
+                                <th:block th:if="${not searchOption and  #lists.isEmpty(bList)}">
                                     <tr>
                                         <td colspan="5">게시글이 존재하지 않음</td>
                                     </tr>
@@ -67,7 +96,35 @@
                 </div>
                 <div class="row">
                 	<div class="col">
-                		<nav aria-label="Page navigation">
+                		<nav th:if="${searchOption and not #lists.isEmpty(bList)}" aria-label="Page navigation">
+							<ul class="pagination justify-content-center">
+								<li class="page-item" th:if="${ startPage > pageGroup }">
+									<a class="page-link" th:href="@{|?pageNum=${startPage - 1}&type=${type}&keyword=${keyword}|}">Pre</a>
+								</li>
+								<li th:each="num : ${ #numbers.sequence(startPage, endPage) }"
+								th:classappend="${num == currentPage} ? 'active'"
+								class="page-item" aria-current="page">
+								<th:block th:if="${num != currentPage}">
+								<a
+								th:text="${num}"
+								th:href="@{|?pageNum=${num}&type=${type}&keyword=${keyword}|}"
+								class="page-link"></a>
+								</th:block>
+								<!--/* 현재 페이지는 링크에서 제외 시킨다.*/-->
+								<th:block th:unless="${num != currentPage}">
+								<span th:text="${num}" class="page-link"></span>
+								</th:block>
+								</li>
+							<li class="page-item" th:if="${endPage < pageCount}">
+							<a
+							class="page-link"
+							th:href="@{|?pageNum=${startPage
+							+
+							pageGroup}&type=${type}&keyword=${keyword}|}">Next</a>
+							</li>
+							</ul>
+							</nav>
+						<nav th:if="${not searchOption and not #lists.isEmpty(bList)}" aria-label="Page navigation">
 							<ul class="pagination justify-content-center">
 								<li class="page-item" th:if="${ startPage > pageGroup }">
 									<a class="page-link" th:href="@{|?pageNum=${startPage - 1}|}">Pre</a>

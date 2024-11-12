@@ -16,6 +16,17 @@
 SELECT
 no,title,writer,content,reg_date AS regDate, read_count AS readCount, pass, file1
 FROM springbbs
+<where>
+<if test="type == 'title'">
+title LIKE CONCAT('%',#{keyword},'%')
+</if>
+<if test="type == 'writer'">
+title LIKE CONCAT('%',#{keyword},'%')
+</if>
+<if test="type == 'content'">
+title LIKE CONCAT('%',#{keyword},'%')
+</if>
+</where>
 ORDER BY no DESC
 LIMIT #{startRow},#{num}
 </select>
@@ -28,6 +39,17 @@ WHERE no=#{no}
 
 <select id="getBoardCount">
 SELECT COUNT(no) FROM springbbs
+<where>
+<if test="type == 'title'">
+title LIKE CONCAT('%',#{keyword},'%')
+</if>
+<if test="type == 'writer'">
+title LIKE CONCAT('%',#{keyword},'%')
+</if>
+<if test="type == 'content'">
+title LIKE CONCAT('%',#{keyword},'%')
+</if>
+</where>
 </select>
 
 <select id="getBoard" resultType="Board">

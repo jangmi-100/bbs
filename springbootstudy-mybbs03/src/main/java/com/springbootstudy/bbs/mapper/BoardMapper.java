@@ -22,9 +22,10 @@ public void updateBoard(Board board);
 
 public void deleteBoard(int no);
 
-public List<Board> boardList(@Param("startRow") int startRow, @Param("num") int num);
+public List<Board> boardList(@Param("startRow") int startRow, @Param("num") int num
+		,@Param("type")String type, @Param("keyword") String keyword);
 
-public int getBoardCount();
+public int getBoardCount(@Param("type")String type, @Param("keyword") String keyword);
 
 public void incrementReadCount(int no);
 

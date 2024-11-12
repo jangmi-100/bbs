@@ -29,8 +29,9 @@ public class BoardController {
 	@GetMapping({"/", "/boardList"})
 	public String boardList(Model model,
 			@RequestParam(value="pageNum",required = false,
-			defaultValue = "1")int pageNum) {
-	Map<String, Object> modelMap=boardService.boardList(pageNum);	
+			defaultValue = "1")int pageNum, @RequestParam(value="keyword",required = false,defaultValue="null") String keyword,
+			@RequestParam(value="type",required = false,defaultValue="null") String type) {
+	Map<String, Object> modelMap=boardService.boardList(pageNum,type,keyword);	
 	model.addAllAttributes(modelMap);
 	
 	

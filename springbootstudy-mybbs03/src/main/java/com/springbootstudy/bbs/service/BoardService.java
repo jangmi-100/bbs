@@ -24,16 +24,18 @@ private static final int PAGE_SIZE = 10;
 private static final int PAGE_GROUP=10;
 
 // 전체 게시글을 읽어와 반환하는 메서드
-public Map<String, Object> boardList(int pageNum) {
-log.info("BoardService: boardList(int pageNum)");
+public Map<String, Object> boardList(int pageNum,String type, String keyword) {
+log.info("BoardService: boardList(int pageNum,String type, String keyword)");
+
+boolean searchOption=(type.equals("null")||keyword.equals("null"))?false:true;
 
 int currentPage=pageNum;
 
 int startRow = (currentPage-1)*PAGE_SIZE;
 
-int listCount = boardMapper.getBoardCount();
+int listCount = boardMapper.getBoardCount(type,keyword);
 
-List<Board> boardList=boardMapper.boardList(startRow,PAGE_SIZE);
+List<Board> boardList=boardMapper.boardList(startRow,PAGE_SIZE,type,keyword);
 
 int pageCount = listCount/PAGE_SIZE + (listCount % PAGE_SIZE==0?0:1);
 
@@ -54,6 +56,12 @@ modelMap.put("endPage",endPage);
 modelMap.put("currentPage",currentPage);
 modelMap.put("listCount", listCount);
 modelMap.put("pageGroup", PAGE_GROUP);
+modelMap.put("searchOption", searchOption);
+
+if(searchOption) {
+	modelMap.put("type", type);
+	modelMap.put("keyword", keyword);
+}
 
 return modelMap;
 }
