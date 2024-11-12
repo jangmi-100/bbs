@@ -68,11 +68,21 @@ public class BoardController {
 	
 	//상세보기
 	@GetMapping("/boardDetail")
-	public String getBaord(Model model,@RequestParam("no") int no,@RequestParam(value="pageNum",defaultValue = "1") int pageNum) {
+	public String getBaord(Model model,@RequestParam("no") int no,@RequestParam(value="pageNum",defaultValue = "1") int pageNum
+			,@RequestParam(value="type",defaultValue = "null")String type,@RequestParam(value="keyword",defaultValue = "null")String keyword) {
+		
+		boolean searchOption=(type.equals("null")||keyword.equals("null"))?false:true;
+		
 		Board board = boardService.getBoard(no, true);
 		
 		model.addAttribute("board",board);
 		model.addAttribute("pageNum",pageNum);
+		model.addAttribute("searchOption",searchOption);
+		
+		if(searchOption) {
+			model.addAttribute("type",type);
+			model.addAttribute("keyword",keyword);
+		}
 		
 		return "views/boardDetail";
 	}
