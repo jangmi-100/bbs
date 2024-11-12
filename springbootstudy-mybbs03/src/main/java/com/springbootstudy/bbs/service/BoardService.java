@@ -58,8 +58,12 @@ modelMap.put("pageGroup", PAGE_GROUP);
 return modelMap;
 }
 
-public Board getBoard(int no) {
-	log.info("BoardService:getBorad(int no)");
+public Board getBoard(int no,boolean isCount) {
+	log.info("BoardService:getBorad(int no,boolean isCount)");
+	
+	if(isCount) {
+		boardMapper.incrementReadCount(no);
+	}
 	return boardMapper.getBoard(no);
 }
 
@@ -89,4 +93,5 @@ public void deleteBoard(int no) {
 	log.info("BoardService:deleteBoard(int no)");
 	boardMapper.deleteBoard(no);
 }
+
 }

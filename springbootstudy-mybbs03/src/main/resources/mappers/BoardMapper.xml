@@ -20,6 +20,12 @@ ORDER BY no DESC
 LIMIT #{startRow},#{num}
 </select>
 
+<update id="incrementReadCount">
+UPDATE springbbs
+SET read_count=read_count+1
+WHERE no=#{no}
+</update>
+
 <select id="getBoardCount">
 SELECT COUNT(no) FROM springbbs
 </select>

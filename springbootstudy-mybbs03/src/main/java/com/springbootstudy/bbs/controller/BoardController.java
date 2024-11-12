@@ -63,8 +63,12 @@ public class BoardController {
 	
 	//상세보기
 	@GetMapping("/boardDetail")
-	public String getBaord(Model model,@RequestParam("no") int no) {
-		model.addAttribute("board",boardService.getBoard(no));
+	public String getBaord(Model model,@RequestParam("no") int no,@RequestParam(value="pageNum",defaultValue = "1") int pageNum) {
+		Board board = boardService.getBoard(no, true);
+		
+		model.addAttribute("board",board);
+		model.addAttribute("pageNum",pageNum);
+		
 		return "views/boardDetail";
 	}
 	
@@ -87,7 +91,7 @@ public class BoardController {
 			out.println("</script>");
 			return null;
 		}
-		Board board=boardService.getBoard(no);
+		Board board=boardService.getBoard(no,false);
 		model.addAttribute("board",board);
 		return "views/updateForm";
 	}

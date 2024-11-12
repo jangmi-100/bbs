@@ -25,4 +25,7 @@ public void deleteBoard(int no);
 public List<Board> boardList(@Param("startRow") int startRow, @Param("num") int num);
 
 public int getBoardCount();
+
+public void incrementReadCount(int no);
+
 }
