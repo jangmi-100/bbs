@@ -1,20 +1,30 @@
 package com.springbootstudy.bbs.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.ProcessBuilder.Redirect;
+import java.net.URLEncoder;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springbootstudy.bbs.domain.Board;
 import com.springbootstudy.bbs.service.BoardService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,6 +35,8 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
+	
+	private static final String DEFAULT_PATH="src/main/resources/static/files/";
 	
 	@GetMapping({"/", "/boardList"})
 	public String boardList(Model model,
@@ -99,8 +111,36 @@ public class BoardController {
 	}
 	
 	@PostMapping("/addBoard")
-	public String addBoard(Board board) {
+	public String addBoard(Board board,
+			@RequestParam(value="addFile",required = false)MultipartFile multipartFile)
+	throws IOException{
 		log.info("title : ",board.getTitle());
+		
+		System.out.println("originName :"+multipartFile.getOriginalFilename());
+		System.out.println("name : "+multipartFile.getName());
+		
+		if(multipartFile != null && !multipartFile.isEmpty()) {
+			File parent = new File(DEFAULT_PATH);
+			
+			if(!parent.isDirectory()&&!parent.exists()) {
+				parent.mkdirs();
+			}
+			
+			UUID uid = UUID.randomUUID();
+			String extension=StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
+			String saveName=uid.toString()+"."+extension;
+			
+			File file = new File(parent.getAbsolutePath(),saveName);
+			
+			log.info("file abs path : "+file.getAbsolutePath());
+			log.info("file path : "+file.getPath());
+			
+			multipartFile.transferTo(file);
+			
+			board.setFile1(saveName);
+		}else {
+			log.info("No file uploaded - 파일이 업로드 되지 않음");
+		}
 		boardService.addBoard(board);
 		return "redirect:boardList";
 	}
@@ -164,6 +204,39 @@ public class BoardController {
 		}
 		reAttrs.addFlashAttribute("test1","1회성 파라미터");
 		return "redirect:/boardList";
+	}
+	
+	@GetMapping("/fileDownload")
+	public void download(HttpServletRequest request, HttpServletResponse response) 
+			throws Exception{
+		String fileName = request.getParameter("fileName");
+		log.info("fileName : "+fileName);
+		
+		File parent = new File(DEFAULT_PATH);
+		
+		File file = new File(parent.getAbsolutePath(),fileName);
+		log.info("file.getNmae(): "+file.getName());
+		
+		response.setContentType("application/download; charset=utf-8");
+		response.setContentLength((int)file.length());
+		
+		fileName=URLEncoder.encode(file.getName(),"UTF-8");
+		log.info("다운로드 fileName : "+fileName);
+		
+		response.setHeader("Content-Disposition","attachment;filename=\""+fileName+"\";");
+		response.setHeader("Content-Transfer-Encoding","binary");
+		
+		OutputStream out= response.getOutputStream();
+		FileInputStream fis=null;
+		
+		fis=new FileInputStream(file);
+		
+		FileCopyUtils.copy(fis, out);
+		
+		if(fis != null) {
+			fis.close();
+		}
+		out.flush();
 	}
 	
 	
