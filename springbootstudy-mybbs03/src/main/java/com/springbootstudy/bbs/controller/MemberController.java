@@ -117,4 +117,12 @@ public class MemberController {
 			 **/
 			return "redirect:/loginForm";
 		}
+		
+		@GetMapping("/overlapIdCheck")
+		public String overlapIdCheck(Model model, @RequestParam("id") String id) {
+			model.addAttribute("id",id);
+			
+			return "member/overlapIdCheck.html";
+		}
+		
 }
