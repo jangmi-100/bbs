@@ -163,7 +163,7 @@ public class BoardController {
 			reAttrs.addAttribute("type", type);
 		}
 		reAttrs.addFlashAttribute("test1","1회성 파라미터");
-		return "redirect:boardList";
+		return "redirect:/boardList";
 	}
 	
 	
