@@ -8,4 +8,6 @@ import com.springbootstudy.bbs.domain.Member;
 public interface MemberMapper {
 
 	public Member getMember(String id);
+	
+	public void addMember(Member member);
 }
