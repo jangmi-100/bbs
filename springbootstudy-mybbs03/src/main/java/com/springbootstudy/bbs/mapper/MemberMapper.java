@@ -10,4 +10,8 @@ public interface MemberMapper {
 	public Member getMember(String id);
 	
 	public void addMember(Member member);
+	
+	public String memberPassCheck(String id);
+	
+	public void updateMember(Member member);
 }

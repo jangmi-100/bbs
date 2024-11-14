@@ -50,4 +50,22 @@ public class MemberService {
 		log.info(member.getPass());
 		memberMapper.addMember(member);
 	}
+	
+	public boolean memberPassCheck(String id, String pass) {
+		String dbpass=memberMapper.memberPassCheck(id);
+		boolean result=false;
+		
+		if(passwordEncoder.matches(pass, dbpass)) {
+			result=true;
+		}
+		return result;
+	}
+	
+	public void updateMember(Member member) {
+		
+		member.setPass(passwordEncoder.encode(member.getPass()));
+		log.info(member.getPass());
+		
+		memberMapper.updateMember(member);
+	}
 }

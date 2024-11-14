@@ -159,4 +159,42 @@ public class MemberController {
 			return "redirect:loginForm";
 		}
 		
+		@GetMapping("/memberUpdateForm")
+		public String updateForm(Model model, HttpSession session) {
+			return "member/memberUpdateForm";
+		}
+		
+		@PostMapping("/memberUpdateResult")
+		public String memberUpdateInfo(Model model,Member member,
+				@RequestParam("pass1")String pass1,
+				@RequestParam("emailId")String emailId,
+				@RequestParam("emailDomain")String emailDomain,
+				@RequestParam("mobile1")String mobile1,
+				@RequestParam("mobile2")String mobile2,
+				@RequestParam("mobile3")String mobile3,
+				@RequestParam("phone1")String phone1,
+				@RequestParam("phone2")String phone2,
+				@RequestParam("phone3")String phone3,
+				@RequestParam(value="emailGet",required=false,defaultValue="false")boolean emailGet
+				) {
+			member.setPass(pass1);
+			member.setEmail(emailId+"@"+emailDomain);
+			member.setMobile(mobile1+"-"+mobile2+"-"+mobile3);
+			
+			if(phone2.equals("")||phone3.equals("")) {
+				member.setPhone("");
+			}else {
+				member.setPhone(phone1+"-"+phone2+"-"+phone3);
+				
+			}
+			member.setEmailGet(Boolean.valueOf(emailGet));
+			
+			memberService.updateMember(member);
+			log.info("memberUpdateResult : "+member.getId());
+			
+			model.addAttribute("member",member);
+			
+			return "redirect:/boardList";
+		}
+		
 }
