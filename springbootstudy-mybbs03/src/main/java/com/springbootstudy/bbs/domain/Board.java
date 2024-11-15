@@ -21,4 +21,6 @@ private Timestamp regDate;
 private int readCount;
 private String pass;
 private String file1;
+private int recommend;
+private int thank;
 }

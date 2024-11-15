@@ -80,6 +80,16 @@ DELETE FROM springbbs
 WHERE no=#{no}
 </delete>
 
+<select id="replyList" resultType="Reply">
+SELECT
+no,
+bbs_no AS bbsNo,
+reply_content AS replyWriter,
+reg_date AS regDate
+FROM reply
+WHERE bbs_no=#{no}
+ORDER BY no DESC
+</select>
 </mapper>	
 
 

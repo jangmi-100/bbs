@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.lang.ProcessBuilder.Redirect;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springbootstudy.bbs.domain.Board;
+import com.springbootstudy.bbs.domain.Reply;
 import com.springbootstudy.bbs.service.BoardService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -101,6 +103,9 @@ public class BoardController {
 		model.addAttribute("board",board);
 		model.addAttribute("pageNum",pageNum);
 		model.addAttribute("searchOption",searchOption);
+		
+		List<Reply> replyList = boardService.replyList(no);
+		model.addAttribute("replyList",replyList);
 		
 		if(searchOption) {
 			model.addAttribute("type",type);

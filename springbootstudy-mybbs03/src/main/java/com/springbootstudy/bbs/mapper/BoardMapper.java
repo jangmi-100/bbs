@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.springbootstudy.bbs.domain.Board;
+import com.springbootstudy.bbs.domain.Reply;
 
 @Mapper
 public interface BoardMapper {
@@ -28,5 +29,7 @@ public List<Board> boardList(@Param("startRow") int startRow, @Param("num") int 
 public int getBoardCount(@Param("type")String type, @Param("keyword") String keyword);
 
 public void incrementReadCount(int no);
+
+public List<Reply> replyList(int no);
 
 }

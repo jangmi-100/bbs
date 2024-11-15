@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.springbootstudy.bbs.domain.Board;
+import com.springbootstudy.bbs.domain.Reply;
 import com.springbootstudy.bbs.mapper.BoardMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -100,6 +101,10 @@ public void updateBoard(Board board) {
 public void deleteBoard(int no) {
 	log.info("BoardService:deleteBoard(int no)");
 	boardMapper.deleteBoard(no);
+}
+
+public List<Reply> replyList(int no){
+	return boardMapper.replyList(no);
 }
 
 }
