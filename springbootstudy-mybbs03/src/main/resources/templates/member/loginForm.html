@@ -8,6 +8,11 @@
 		<link th:href="@{css/member.css}" rel="stylesheet" />
 	</th:block>
 		<div class="col">
+			<th:block th:unless="${#strings.isEmpty(session.loginMsg)}">
+			<h4 class="fw-bold my-3 text-center text-primary" th:text="${session.loginMsg}">
+				로그인이 필요한 서비스
+			</h4>
+			</th:block>
 			<form class="my-5" id="loginForm" action="login" method="post">
 				<h2 class="fw-bold">Member Login</h2>
 				<fieldset>	
