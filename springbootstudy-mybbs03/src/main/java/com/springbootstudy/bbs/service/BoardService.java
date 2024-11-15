@@ -107,4 +107,16 @@ public List<Reply> replyList(int no){
 	return boardMapper.replyList(no);
 }
 
+public Map<String, Integer> recommend(int no, String recommend){
+	boardMapper.updateRecommend(no, recommend);
+	
+	Board board = boardMapper.getRecommend(no);
+	
+	Map<String, Integer> map = new HashMap<String,Integer>();
+	
+	map.put("recommend", board.getRecommend());
+	map.put("thank", board.getThank());
+	return map;
+}
+
 }

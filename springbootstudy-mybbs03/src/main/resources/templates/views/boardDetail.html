@@ -4,8 +4,8 @@
 
 			<!-- content -->
 	<th:block layout:fragment="content">
-		<script src="js/reply.js"></script>
-			<div class="row my-5" id="global-content">
+		<script src="js/reply.js"></script>		
+				<div class="row my-5" id="global-content">
 				<div class="col-10 offset-1">
 					<form name="checkForm" id="checkForm">
 						<input type="hidden" name="no" id="no" th:value="${board.no}"/>
@@ -149,7 +149,7 @@
 						<div class="col">
 							<form name="replyWriteForm" id="replyWriteForm">
 								<input type="hidden" name="bbsNo" th:value="${board.no}">
-								<input type="hidden" name="replyWriter" th:value="${member.id}">
+								<input type="hidden" name="replyWriter" th:value="${session.member.id}">
 								<div class="row bg-light my-3 p-3 border">
 									<div class="col">
 										<div class="row">

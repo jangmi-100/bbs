@@ -84,11 +84,28 @@ WHERE no=#{no}
 SELECT
 no,
 bbs_no AS bbsNo,
-reply_content AS replyWriter,
+reply_content AS replyContent,
+reply_writer AS replyWriter,
 reg_date AS regDate
 FROM reply
 WHERE bbs_no=#{no}
 ORDER BY no DESC
+</select>
+<update id="updateRecommend">
+UPDATE springbbs
+SET
+<if test="recommend == 'commend'">
+recommend=recommend+1
+</if>
+<if test="recommend== 'thank'">
+thank=thank+1
+</if>
+WHERE no =#{no}
+</update>
+<select id="getRecommend" resultType="Board">
+SELECT recommend, thank
+FROM springbbs
+WHERE no=#{no}
 </select>
 </mapper>	
 

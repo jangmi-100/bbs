@@ -32,4 +32,8 @@ public void incrementReadCount(int no);
 
 public List<Reply> replyList(int no);
 
+public void updateRecommend(@Param("no") int no,@Param("recommend") String recommend);
+
+public Board getRecommend(int no);
+
 }
