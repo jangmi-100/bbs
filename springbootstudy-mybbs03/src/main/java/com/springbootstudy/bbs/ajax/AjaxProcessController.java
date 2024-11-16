@@ -1,6 +1,7 @@
 package com.springbootstudy.bbs.ajax;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springbootstudy.bbs.domain.Reply;
 import com.springbootstudy.bbs.service.BoardService;
 import com.springbootstudy.bbs.service.MemberService;
 
@@ -38,6 +40,11 @@ public class AjaxProcessController {
 		return boardService.recommend(no, recommend);
 	}
 	
+	@PostMapping("/replyWrite.ajax")
+	public List<Reply> addReply(Reply reply){
+		boardService.addReply(reply);
+		return boardService.replyList(reply.getBbsNo());
+	}
 	
 	
 }

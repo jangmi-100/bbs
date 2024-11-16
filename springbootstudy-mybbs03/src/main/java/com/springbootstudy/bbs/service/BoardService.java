@@ -119,4 +119,9 @@ public Map<String, Integer> recommend(int no, String recommend){
 	return map;
 }
 
+public void addReply(Reply reply) {
+	boardMapper.addReply(reply);
+}
+
+
 }

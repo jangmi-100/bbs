@@ -36,4 +36,6 @@ public void updateRecommend(@Param("no") int no,@Param("recommend") String recom
 
 public Board getRecommend(int no);
 
+public void addReply(Reply reply);
+
 }

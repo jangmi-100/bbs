@@ -91,22 +91,35 @@ FROM reply
 WHERE bbs_no=#{no}
 ORDER BY no DESC
 </select>
+
 <update id="updateRecommend">
-UPDATE springbbs
-SET
-<if test="recommend == 'commend'">
-recommend=recommend+1
-</if>
-<if test="recommend== 'thank'">
-thank=thank+1
-</if>
-WHERE no =#{no}
+    UPDATE springbbs
+    <set>
+        <if test="recommend == 'commend'">
+            recommend = recommend + 1
+        </if>
+        <if test="recommend == 'thank'">
+            thank = thank + 1
+        </if>
+    </set>
+    WHERE no = #{no}
 </update>
+
+
+
+
 <select id="getRecommend" resultType="Board">
 SELECT recommend, thank
 FROM springbbs
 WHERE no=#{no}
 </select>
+
+
+<insert id="addReply" parameterType="Reply">
+INSERT INTO reply(bbs_no, reply_content, reply_writer, reg_date)
+VALUES(#{bbsNo}, #{replyContent}, #{replyWriter}, SYSDATE())
+</insert>
+
 </mapper>	
 
 
