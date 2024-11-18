@@ -123,5 +123,8 @@ public void addReply(Reply reply) {
 	boardMapper.addReply(reply);
 }
 
+public void updateReply(Reply reply) {
+	boardMapper.updateReply(reply);
+}
 
 }

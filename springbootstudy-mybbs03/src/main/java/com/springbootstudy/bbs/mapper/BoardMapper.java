@@ -38,4 +38,6 @@ public Board getRecommend(int no);
 
 public void addReply(Reply reply);
 
+public void updateReply(Reply reply);
+
 }

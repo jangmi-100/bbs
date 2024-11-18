@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,12 @@ public class AjaxProcessController {
 	@PostMapping("/replyWrite.ajax")
 	public List<Reply> addReply(Reply reply){
 		boardService.addReply(reply);
+		return boardService.replyList(reply.getBbsNo());
+	}
+	
+	@PatchMapping("/replyUpdate.ajax")
+	public List<Reply> updateReply(Reply reply){
+		boardService.updateReply(reply);
 		return boardService.replyList(reply.getBbsNo());
 	}
 	
