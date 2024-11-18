@@ -127,6 +127,10 @@ reg_date=SYSDATE()
 WHERE no=#{no}
 </update>
 
+<delete id="deleteReply">
+DELETE FROM reply
+WHERE no=#{no}
+</delete>
 
 </mapper>	
 

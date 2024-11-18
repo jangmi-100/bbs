@@ -127,4 +127,8 @@ public void updateReply(Reply reply) {
 	boardMapper.updateReply(reply);
 }
 
+public void deleteReply(int no) {
+	boardMapper.deleteReply(no);
+}
+
 }

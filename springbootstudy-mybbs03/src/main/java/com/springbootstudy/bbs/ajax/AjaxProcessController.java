@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,5 +54,11 @@ public class AjaxProcessController {
 		return boardService.replyList(reply.getBbsNo());
 	}
 	
+	@DeleteMapping("/replyDelete.ajax")
+	public List<Reply> deleteReply(@RequestParam("no") int no,
+			@RequestParam("bbsNo")int bbsNo){
+		boardService.deleteReply(no);
+		return boardService.replyList(bbsNo);
+	}
 	
 }

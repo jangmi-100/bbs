@@ -40,4 +40,6 @@ public void addReply(Reply reply);
 
 public void updateReply(Reply reply);
 
+public void deleteReply(int no);
+
 }
